@@ -2,6 +2,8 @@ package com.stqa.astar;
 
 import com.stqa.astar.cell.Cell;
 import com.stqa.astar.controllers.KeyBinding;
+import com.stqa.astar.controllers.MyMouseListener;
+import com.stqa.astar.controllers.MyMouseMotionListener;
 import com.stqa.astar.core.AStarCore;
 import com.stqa.astar.grid.Grid;
 
@@ -25,6 +27,9 @@ public class AStar extends JFrame {
 		this.canvas.setFocusable(true);
 		this.canvas.setRequestFocusEnabled(true);
 		add(this.canvas);
+		
+		this.addMouseListener(new MyMouseListener());
+		this.addMouseMotionListener(new MyMouseMotionListener());
 		
 		GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice device = graphics.getDefaultScreenDevice();

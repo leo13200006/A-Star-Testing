@@ -3,7 +3,7 @@ package com.stqa.astar.controllers;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static com.stqa.astar.controllers.Keys.*;
+import static com.stqa.astar.controllers.constants.Keys.*;
 import static java.awt.event.KeyEvent.*;
 
 public record KeyBinding(InputMap inputMap, ActionMap actionMap) {

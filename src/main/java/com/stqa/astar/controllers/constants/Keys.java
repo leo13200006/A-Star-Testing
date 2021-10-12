@@ -1,4 +1,4 @@
-package com.stqa.astar.controllers;
+package com.stqa.astar.controllers.constants;
 
 public enum Keys {
 	S_KEY("Start Point"),
