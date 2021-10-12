@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class AStarCore {
-	public static ArrayList<Cell> openSet,
-			closedSet;
+	public static ArrayList<Cell> openSet = new ArrayList<>(),
+			closedSet = new ArrayList<>();
 
 	public Cell current;
 
