@@ -1,5 +1,7 @@
 package com.stqa.astar.controllers;
 
+import com.stqa.astar.AStar;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,12 +16,12 @@ public class MyMouseListener implements MouseListener {
 		FLAG = true;
 		if (KeyBinding.getKEYCODE() == KeyEvent.VK_S) {
 			START_CELL = true;
-			// createStartCell(e.getPoint());
+			AStar.setStartCell(e);
 		}
 		
 		if (KeyBinding.getKEYCODE() == KeyEvent.VK_E) {
 			END_CELL = true;
-			// createEndCell(e.getPoint());
+			AStar.setEndCell(e);
 		}
 	}
 	

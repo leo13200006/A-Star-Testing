@@ -1,5 +1,8 @@
 package com.stqa.astar.controllers;
 
+import com.stqa.astar.AStar;
+import com.stqa.astar.grid.Grid;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -46,6 +49,7 @@ public record KeyBinding(InputMap inputMap, ActionMap actionMap) {
 			@Override
 			public void actionPerformed (ActionEvent e) {
 				KEYCODE = VK_ENTER;
+				AStar.beginAStar = true;
 			}
 		};
 	}
@@ -55,6 +59,7 @@ public record KeyBinding(InputMap inputMap, ActionMap actionMap) {
 			@Override
 			public void actionPerformed (ActionEvent e) {
 				KEYCODE = VK_ESCAPE;
+				AStar.reset();
 			}
 		};
 	}
@@ -64,6 +69,7 @@ public record KeyBinding(InputMap inputMap, ActionMap actionMap) {
 			@Override
 			public void actionPerformed (ActionEvent e) {
 				KEYCODE = VK_R;
+				AStar.randomWalls();
 			}
 		};
 	}
