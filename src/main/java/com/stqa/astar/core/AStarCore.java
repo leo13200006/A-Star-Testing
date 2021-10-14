@@ -4,11 +4,13 @@ import com.stqa.astar.AStar;
 import com.stqa.astar.cell.Cell;
 import com.stqa.astar.grid.Grid;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class AStarCore {
-	public ArrayList<Cell> openSet = new ArrayList<>(), closedSet = new ArrayList<>();
-
+	public static ArrayList<Cell> openSet = new ArrayList<>(),
+			closedSet = new ArrayList<>();
+ 
 	public Cell current;
 
 	public boolean startAStar() {
@@ -70,10 +72,8 @@ public class AStarCore {
 		}
 		AStar.print(path);
 	}
-
-	// * implementation from java.awt.geom.Point2D
-	private double distance(double x1, double y1,
-													double x2, double y2) {
+	
+	private double distance(double x1, double y1, double x2, double y2) {
 		x1 -= x2;
 		y1 -= y2;
 		return Math.sqrt(x1 * x1 + y1 * y1);
@@ -82,5 +82,25 @@ public class AStarCore {
 	private int heuristic(Cell neighbor, Cell end) {
 		// Return Euclidean Distance for now
 		return (int) distance(neighbor.x, neighbor.y, end.x, end.y);
+	}
+	
+	public void setColorsToCell () {
+		for (Cell cell : openSet) {
+			cell.color = new Color(143, 255, 232);
+		}
+		
+		for (Cell cell : closedSet) {
+			cell.color = new Color(251, 168, 255);
+		}
+		ArrayList<Cell> path = new ArrayList<>();
+		Cell temp = current;
+		path.add(temp);
+		while (temp.previous != null) {
+			path.add(temp.previous);
+			temp = temp.previous;
+		}
+		for (Cell cell : path) {
+			cell.color = new Color(248, 0, 104);
+		}
 	}
 }

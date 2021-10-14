@@ -2,16 +2,21 @@ package com.stqa.astar.cell;
 
 import com.stqa.astar.grid.Grid;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Cell {
 	public final int i, j;
 	private int fCost, gCost, hCost;
 	private final ArrayList<Cell> neighbors = new ArrayList<>();
-	private Cell previous;
+	public Cell previous;
 	private boolean isWall, isStart, isEnd;
 	public final int x, y;
-
+	public static int width, height;
+	public Color color;
+	private static final HashMap<Point, int[]> pointMap = new HashMap<>();
+	
 	public Cell(int i, int j) {
 		this.i = i;
 		this.j = j;
@@ -21,17 +26,32 @@ public class Cell {
 		this.isWall = false;
 		this.isStart = false;
 		this.isEnd = false;
-		int w = Grid.width / Grid.rows;
-		int h = Grid.width / Grid.cols;
-
-		// * Scaling for drawing
-		// w *= 0.55;
-		// h *= 0.55;
-
-		this.x = i * w;
-		this.y = j * h;
+		width = Grid.width / Grid.rows - 10;
+		height = Grid.width / Grid.cols - 10;
+		this.x = i * width + 5;
+		this.y = j * height + 5;
+		this.color = Color.WHITE;
+		
+		int[] c = { i, j };
+		for (int k = x; k < x + width; k++)
+			for (int l = y; l < y + height; l++)
+				pointMap.put(new Point(k, l), c);
 	}
 
+	public void draw(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		Stroke s = new BasicStroke(2f);
+		g2.setStroke(s);
+		g2.setColor(color);
+		g2.fillRect(x, y, width, height);
+		g2.setColor(Color.BLACK);
+		g2.drawRect(x, y, width, height);
+ 	}
+	
+	public static int[] clickedCell(Point click) {
+		return pointMap.get(click);
+	}
+ 
 	public void addNeighbors(Cell[][] grid, int rows, int cols) {
 		int i = this.i;
 		int j = this.j;
