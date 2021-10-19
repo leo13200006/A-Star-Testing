@@ -1,22 +1,22 @@
 package com.stqa.astar.grid;
 
+import com.stqa.astar.AStar;
 import com.stqa.astar.cell.Cell;
+import com.stqa.astar.core.AStarCore;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Grid {
 	public static int width, height;
-	public static final int rows = 10, cols = 10;
+	public static final int rows = 30, cols = 30;
 	private static final Cell[][] grid = new Cell[rows][cols];
 	private static Cell start;
 	private static Cell end;
 
 	public Grid() {
-		GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice device = graphics.getDefaultScreenDevice();
-		width = device.getDisplayMode().getWidth();
-		height = device.getDisplayMode().getHeight();
+		Grid.width = AStar.width;
+		Grid.height = AStar.height;
+		this.setup();
 	}
 
 	public void setup() {
@@ -25,23 +25,18 @@ public class Grid {
 				grid[i][j] = new Cell(i, j);
 			}
 		}
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				grid[i][j].addNeighbors(grid, rows, cols);
+				grid[i][j].addNeighbors(grid);
 			}
 		}
 	}
 
-	public void randomWalls() {
-		// Cells have a 30% chance of being a wall
-		Random r = new Random();
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				if (!(grid[i][j].isStart() || grid[i][j].isEnd())) {
-					if (r.nextDouble() < 0.3) {
-						grid[i][j].setWall(true);
-					}
-				}
+	public void drawAllCells(Graphics graphics) {
+		for (Cell[] cells : grid) {
+			for (Cell cell : cells) {
+				cell.draw(graphics);
 			}
 		}
 	}
@@ -54,17 +49,37 @@ public class Grid {
 		return start;
 	}
 
-	public void setStart(int i, int j) {
-		start = grid[i][j];
-		grid[i][j].setStart(true);
-	}
-
 	public static Cell getEnd() {
 		return end;
 	}
 
+	public void setStart(int i, int j) {
+		start = grid[i][j];
+		AStarCore.openSet.add(start);
+		grid[i][j].color = new Color(120, 178, 179);
+		grid[i][j].setStart(true);
+	}
+
 	public void setEnd(int i, int j) {
 		end = grid[i][j];
+		grid[i][j].color = new Color(255, 94, 90);
 		grid[i][j].setEnd(true);
+	}
+
+	public void setWall(int i, int j) {
+		grid[i][j].setWall(true);
+		grid[i][j].color = new Color(50, 50, 50);
+	}
+
+	public boolean isNotWall(int i, int j) {
+		return !grid[i][j].isWall();
+	}
+
+	public boolean isNotStart(int i, int j) {
+		return !grid[i][j].isStart();
+	}
+
+	public boolean isNotEnd(int i, int j) {
+		return !grid[i][j].isEnd();
 	}
 }
