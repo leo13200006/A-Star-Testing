@@ -10,7 +10,6 @@ import com.stqa.astar.grid.Grid;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class AStar extends JFrame {
@@ -160,10 +159,10 @@ public class AStar extends JFrame {
 	}
 
 	public static void reset() {
-		beginAStar = randomCells = startSet = endSet = false;
-		aStarCore = new AStarCore();
 		grid = new Grid();
 		canvas.repaint();
+		beginAStar = randomCells = startSet = endSet = false;
+		aStarCore = new AStarCore();
 	}
 
 	public static void setStartCell(MouseEvent e) {
@@ -200,33 +199,5 @@ public class AStar extends JFrame {
 
 	public static void main(String[] args) {
 		new AStar();
-	}
-
-	public static void print(ArrayList<Cell> path) {
-		String[][] grid = new String[Grid.rows][Grid.cols];
-		for (Cell[] row : Grid.getGrid()) {
-			for (Cell cell : row) {
-				if (cell.isStart()) {
-					grid[cell.i][cell.j] = "\u001B[32mS\u001B[0m";
-				} else if (cell.isEnd()) {
-					grid[cell.i][cell.j] = "\u001B[31mE\u001B[0m";
-				} else if (cell.isWall()) {
-					grid[cell.i][cell.j] = "\u001B[35m#\u001B[0m";
-				} else {
-					grid[cell.i][cell.j] = "\u001B[36m.\u001B[0m";
-				}
-			}
-		}
-
-		for (Cell cell : path) {
-			if (!(cell.isStart() || cell.isEnd())) grid[cell.i][cell.j] = "\u001B[33m*\u001B[0m";
-		}
-
-		for (String[] row : grid) {
-			for (String cell : row) {
-				System.out.print(cell + " ");
-			}
-			System.out.println();
-		}
 	}
 }

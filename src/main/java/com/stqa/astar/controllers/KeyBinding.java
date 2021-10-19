@@ -8,9 +8,16 @@ import java.awt.event.ActionEvent;
 import static com.stqa.astar.controllers.constants.Keys.*;
 import static java.awt.event.KeyEvent.*;
 
-public record KeyBinding(InputMap inputMap, ActionMap actionMap) {
+public class KeyBinding {
 	private static int KEYCODE;
+	private final InputMap inputMap;
+	private final ActionMap actionMap;
 
+	public KeyBinding(InputMap inputMap, ActionMap actionMap) {
+		this.inputMap = inputMap;
+		this.actionMap = actionMap;
+	}
+	
 	public void setup() {
 		this.inputMap.put(KeyStroke.getKeyStroke(VK_S, 0, false), S_KEY);
 		this.inputMap.put(KeyStroke.getKeyStroke(VK_E, 0, false), E_KEY);
