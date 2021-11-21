@@ -17,7 +17,7 @@ public class AStar extends JFrame {
 	public static int height;
 	public static JPanel canvas;
 	public static Grid grid;
-	private static boolean randomCells;
+	public static boolean randomCells;
 	public static boolean startSet;
 	public static boolean endSet;
 	private final Font largeFont = new Font("Fira Code", Font.BOLD, 36);
