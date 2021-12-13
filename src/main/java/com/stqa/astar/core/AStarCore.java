@@ -80,6 +80,7 @@ public class AStarCore {
 			cell.color = new Color(251, 168, 255);
 			cell.draw(g);
 		}
+
 		ArrayList<Cell> path = new ArrayList<>();
 		Cell temp = current;
 		path.add(temp);
@@ -91,7 +92,11 @@ public class AStarCore {
 		}
 
 		for (Cell cell : path) {
-			cell.color = new Color(248, 0, 104);
+			if (cell.isStart())
+				cell.color = new Color(120, 178, 179);
+			else if (cell.isEnd())
+				cell.color = new Color(255, 94, 90);
+			else cell.color = new Color(160, 32, 240);
 			cell.draw(g);
 		}
 	}
