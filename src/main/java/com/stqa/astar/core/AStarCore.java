@@ -7,8 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class AStarCore {
-	public static ArrayList<Cell> openSet,
-			closedSet;
+	public static ArrayList<Cell> openSet,closedSet;
 
 	public Cell current;
 
@@ -64,7 +63,7 @@ public class AStarCore {
 		}
 	}
 
-	private int heuristic(Cell a, Cell b) {
+	public int heuristic(Cell a, Cell b) {
 		Point p = a.getPoint();
 		Point q = b.getPoint();
 		return (int) Point.distance(p.x, p.y, q.x, q.y);
