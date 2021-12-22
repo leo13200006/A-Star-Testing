@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class AStar extends JFrame {
-	public int width, height;
+	public static int width, height;
 	public JPanel canvas;
 	public AStar() throws HeadlessException {
 		super("A Star Pathfinding");

@@ -1,15 +1,21 @@
 package com.stqa.astar.core;
 
-import com.stqa.astar.AStar;
 import com.stqa.astar.cell.Cell;
 import com.stqa.astar.grid.Grid;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class AStarCore {
-	public ArrayList<Cell> openSet = new ArrayList<>(), closedSet = new ArrayList<>();
+	public static ArrayList<Cell> openSet = new ArrayList<>(),
+			closedSet = new ArrayList<>();
 
 	public Cell current;
+
+	public AStarCore() {
+		openSet = new ArrayList<>();
+		closedSet = new ArrayList<>();
+	}
 
 	public boolean startAStar() {
 		if (openSet.size() > 0) {
@@ -22,7 +28,6 @@ public class AStarCore {
 			}
 			current = openSet.get(winner);
 			if (current.isEnd() && Grid.getEnd().isEnd()) {
-				createAndShowPath();
 				return false;
 			}
 
@@ -55,30 +60,44 @@ public class AStarCore {
 			return true;
 		} else {
 			System.out.println("No Solution!");
-			createAndShowPath();
 			return false;
 		}
 	}
 
-	private void createAndShowPath() {
+	public int heuristic(Cell a, Cell b) {
+		Point p = a.getPoint();
+		Point q = b.getPoint();
+		return (int) Point.distance(p.x, p.y, q.x, q.y);
+	}
+
+	public void draw(Graphics g) {
+		for (Cell cell : openSet) {
+			cell.color = new Color(143, 255, 232);
+			cell.draw(g);
+		}
+
+		for (Cell cell : closedSet) {
+			cell.color = new Color(251, 168, 255);
+			cell.draw(g);
+		}
+
 		ArrayList<Cell> path = new ArrayList<>();
 		Cell temp = current;
 		path.add(temp);
 		while (temp.getPrevious() != null) {
-			path.add(temp.getPrevious());
-			temp = temp.getPrevious();
+			if (!temp.isStart() || !temp.isEnd()) {
+				path.add(temp.getPrevious());
+				temp = temp.getPrevious();
+			}
 		}
-		AStar.print(path);
-	}
-	
-	private double distance(double x1, double y1, double x2, double y2) {
-		x1 -= x2;
-		y1 -= y2;
-		return Math.sqrt(x1 * x1 + y1 * y1);
-	}
 
-	private int heuristic(Cell neighbor, Cell end) {
-		// Return Euclidean Distance for now
-		return (int) distance(neighbor.x, neighbor.y, end.x, end.y);
+		for (Cell cell : path) {
+			if (cell.isStart())
+				cell.color = new Color(120, 178, 179);
+			else if (cell.isEnd())
+				cell.color = new Color(255, 94, 90);
+			else cell.color = new Color(160, 32, 240);
+			cell.draw(g);
+		}
 	}
 }
